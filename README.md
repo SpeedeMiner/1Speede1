@@ -49,20 +49,10 @@ chown -R www-data:www-data /var/www
 
 ## ⚙️ Что еще можно/нужно поменять под себя
 
-1.  **Заголовок защиты `X-Request-ID`:**
-    В конфигурации используется секретный заголовок для авторизации gRPC (STREAM-ONE) и XHTTP соединений:
-    ```nginx
-    map $http_x_request_id $xray_allow {
-        default          0;
-        "4dbe37b4b1d8196f" 1; # Ваш секретный ключ
-    }
-    ```
-    Вы можете изменить `4dbe37b4b1d8196f` на свой уникальный ключ и обязательно прописать его в настройках клиентов (например, v2rayN, Nekobox) в разделе пользовательских заголовков.
-
-2.  **SNI домены для Reality:**
+1.  **SNI домены для Reality:**
     В блоке `stream -> map $ssl_preread_server_name` вы можете добавлять или изменять домены, которые будут маршрутизироваться на Reality сокеты (например, `taxi.yandex.ru`, `f1tv.formula1.com`).
 
-3.  **Сайт для маскировки (Reverse Proxy):**
+2.  **Сайт для маскировки (Reverse Proxy):**
     В данный момент сервер маскируется под `animesss.com`. Если вы решите сменить домен маскировки, вам потребуется аккуратно заменить:
     *   `animess_backend` (строка `server animesss.com:443 resolve;`)
     *   Все вхождения `animesss.com` в правилах `proxy_pass`, `proxy_ssl_name`, `proxy_set_header Host`, `proxy_cookie_domain` и `sub_filter`.
